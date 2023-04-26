@@ -7,6 +7,7 @@ const initModels = () => {
 
 
    //? Users -> Participants
+   Users.belongsTo(Participants)
 
 
    //? Conversations -> Participants
