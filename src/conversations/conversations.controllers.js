@@ -17,8 +17,10 @@ const findConversationById = async (id) => {
   return data
 }
 
-const createConversation  = async (conversationObj, userOwnerId, userGuestId) => {
-  const userGuest = await Users.findOne({where: {id: userGuestId}})
+const createConversation = async (conversationObj) => {
+
+  //? Validacion por si el usuario invitado existe
+  const userGuest = await Users.findOne({where: {id: conversationObj.guestId}})
 
   if(!userGuest){
       return false
@@ -34,7 +36,7 @@ const createConversation  = async (conversationObj, userOwnerId, userGuestId) =>
   //? Owner participant
   await Participants.create({
       id: uuid.v4(),
-      userId: userOwnerId,
+      userId: conversationObj.ownerId,
       conversationId: newConversation.id,
       isAdmin: true
   })
@@ -42,7 +44,7 @@ const createConversation  = async (conversationObj, userOwnerId, userGuestId) =>
   //? Guest participant
   await Participants.create({
       id: uuid.v4(),
-      userId: userGuestId,
+      userId: conversationObj.guestId,
       conversationId: newConversation.id,
       isAdmin: false
   })
@@ -50,18 +52,6 @@ const createConversation  = async (conversationObj, userOwnerId, userGuestId) =>
   return newConversation
 }
 
-const updateConversation = async () => {
-
-}
-
-const deleteConversation = async () => {
-
-}
-
 module.exports = {
-  findAllConversations,
-  findConversationById,
-  createConversation,
-  updateConversation,
-  deleteConversation
+  createConversation
 }
