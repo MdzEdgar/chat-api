@@ -11,15 +11,18 @@ const getAllConversations =(req, res) => {
 }
 
 const postConversation = (req, res) => {
-  const ownerId = req.user.id
-  const { guestId, ...conversationObj } = req.body
-  conversationControllers.createConversation(conversationObj, ownerId, guestId)
-    .then(data => {
-      res.status(201).json(data)
-    })
-    .catch(err => {
-      res.status(400).json({message: 'Bad request', err: err.message})
-    })
+  const conversationObj = req.body
+  const ownerId = req.user.id 
+  conversationControllers.createConversation({...conversationObj, ownerId})
+      .then(data => {
+          if(!data) {
+              return res.status(404).json({message: 'Guest ID not exists'})
+          }
+          res.status(201).json(data)
+      })
+      .catch(err => {
+          res.status(400).json({err: err.message})
+      })
 }
 
 module.exports = { 
