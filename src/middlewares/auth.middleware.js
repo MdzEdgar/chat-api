@@ -6,7 +6,7 @@ const jwtSecret = require('../../config').jwtSecret
 const { findUserById } = require('../users/users.controllers')
 
 const options = {
-    jwtFromRequest : ExtractJwt.fromAuthHeaderWithScheme('jwt'),
+    jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwtSecret
 }
 
