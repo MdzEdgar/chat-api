@@ -29,7 +29,7 @@ const findAllConversationsByUser = async (id) => {
   return data
 }
 
-const createConversation = async (conversationObj) => {
+const createConversation = async(conversationObj) => {
 
   //? Validacion por si el usuario invitado existe
   const userGuest = await Users.findOne({where: {id: conversationObj.guestId}})

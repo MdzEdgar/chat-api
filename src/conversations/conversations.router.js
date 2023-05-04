@@ -8,7 +8,7 @@ router.route('/')
   .get(passportJwt.authenticate("jwt", { session: false }), conversationServices.getAllConversations)
   .post(passportJwt.authenticate("jwt", { session: false }), conversationServices.postConversation)
 
-router.route('/:conversation_id')
+router.route('/:id')
   .get(passportJwt.authenticate('jwt', { session: false }), conversationServices.getConversationById)
   .patch(passportJwt.authenticate('jwt', { session: false }), conversationServices.patchConversation)
 
