@@ -52,7 +52,7 @@ const postConversation = (req, res) => {
 }
 
 const patchConversation = (req, res) => {
-  const id = req.params.id
+  const id = req.params.conversation_id
   const { name, profileImage,isGroup } = req.body
   conversationControllers.updateConversation(id, {name, profileImage,isGroup})
     .then((data) => {
@@ -63,12 +63,12 @@ const patchConversation = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(400).json({err})
+      res.status(400).json({err: err.message})
     })
 }
 
 const deleteConversation = (req, res) => {
-  const id = req.params.id
+  const id = req.params.conversation_id
   conversationControllers.removeConversation(id)
     .then((data) => {
       if(!data) {
@@ -81,11 +81,27 @@ const deleteConversation = (req, res) => {
     })
 }
 
+const getMessagesByConversationId = (req, res) => {
+  const id = req.params.conversation_id
+  conversationControllers.findAllMessagesByConversationId(id)
+    .then((data) => {
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        res.status(404).json({message: 'Invalid ID'})
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({err: err.message})
+    })
+}
+
 module.exports = { 
   getAllConversations,
   getConversationById,
   postConversation,
   patchConversation,
   deleteConversation,
-  getAllConversationsByUser
+  getAllConversationsByUser,
+  getMessagesByConversationId
 }

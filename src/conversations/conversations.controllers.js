@@ -2,6 +2,7 @@ const uuid = require('uuid')
 const Conversations = require('../models/conversations.models')
 const Participants = require('../models/participants.models')
 const Users = require('../models/users.models')
+const Messages = require('../models/messages.models')
 
 const findAllConversations = async () => {
   const conversations = await Conversations.findAll()
@@ -86,11 +87,28 @@ const removeConversation = async(id) => {
   return conversation
 }
 
+const findAllMessagesByConversationId = async (id) => {
+  const messages = await Conversations.findAll({
+    where: {
+      id: id
+    },
+    include: [{
+      model: Participants,
+      include: [{
+        model: Messages
+      }]
+    }]
+  })
+
+  return messages
+}
+
 module.exports = {
   findAllConversations,
   findConversationById,
   findAllConversationsByUser,
   createConversation,
   updateConversation,
-  removeConversation
+  removeConversation,
+  findAllMessagesByConversationId
 }
