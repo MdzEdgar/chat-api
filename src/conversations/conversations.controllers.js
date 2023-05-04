@@ -103,6 +103,15 @@ const findAllMessagesByConversationId = async (id) => {
   return messages
 }
 
+const createMessage = async (id, messageObj) => {
+  const newMessage = await Messages.create({
+    id: uuid.v4(),
+    content: messageObj.content,
+    participantId: messageObj.participantId
+  })
+  return newMessage
+}
+
 module.exports = {
   findAllConversations,
   findConversationById,
@@ -110,5 +119,6 @@ module.exports = {
   createConversation,
   updateConversation,
   removeConversation,
-  findAllMessagesByConversationId
+  findAllMessagesByConversationId,
+  createMessage
 }

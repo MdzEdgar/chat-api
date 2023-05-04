@@ -96,6 +96,18 @@ const getMessagesByConversationId = (req, res) => {
     })
 }
 
+const postMessage = (req, res) => {
+  const id = req.params.conversation_id
+  const { content, participantId} = req.body
+  conversationControllers.createMessage(id, {content, participantId})
+    .then((data) => {
+      res.status(201).json(data)
+    })
+    .catch((err) => {
+      res.status(400).json({err})
+    })
+}
+
 module.exports = { 
   getAllConversations,
   getConversationById,
@@ -103,5 +115,6 @@ module.exports = {
   patchConversation,
   deleteConversation,
   getAllConversationsByUser,
-  getMessagesByConversationId
+  getMessagesByConversationId,
+  postMessage
 }
