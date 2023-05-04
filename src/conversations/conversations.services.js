@@ -123,6 +123,20 @@ const getMessageById = (req, res) => {
     })
 }
 
+const deleteMessage = (req, res) => {
+  const id = req.params.message_id
+  conversationControllers.removeMessageById(id)
+    .then((data) => {
+      if(!data) {
+        return res.status(404).json({message: 'Invalid ID'})
+      }
+      res.status(204).json()
+    })
+    .catch((err) => {
+      res.status(400).json({err: err.message})
+    })
+}
+
 module.exports = { 
   getAllConversations,
   getConversationById,
@@ -132,5 +146,6 @@ module.exports = {
   getAllConversationsByUser,
   getMessagesByConversationId,
   postMessage,
-  getMessageById
+  getMessageById,
+  deleteMessage
 }

@@ -121,6 +121,15 @@ const findMessageById = async(id) => {
   return message
 }
 
+const removeMessageById = async(id) => {
+  const message = await Messages.destroy({
+    where: {
+      id: id
+    }
+  })
+  return message
+}
+
 module.exports = {
   findAllConversations,
   findConversationById,
@@ -130,5 +139,6 @@ module.exports = {
   removeConversation,
   findAllMessagesByConversationId,
   createMessage,
-  findMessageById
+  findMessageById,
+  removeMessageById
 }
