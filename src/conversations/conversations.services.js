@@ -10,6 +10,17 @@ const getAllConversations =(req, res) => {
     })
 }
 
+const getAllConversationsByUser = (req, res) => {
+  const id = req.user.id
+  conversationControllers.findAllConversationsByUser(id)
+    .then((data) => {
+      res.status(200).json(data)
+    })
+    .catch((err) => {
+      res.status(400).json({err: err.message})
+    })
+}
+
 const postConversation = (req, res) => {
   const conversationObj = req.body
   const ownerId = req.user.id 
@@ -27,5 +38,6 @@ const postConversation = (req, res) => {
 
 module.exports = { 
   getAllConversations,
-  postConversation
+  postConversation,
+  getAllConversationsByUser
 }

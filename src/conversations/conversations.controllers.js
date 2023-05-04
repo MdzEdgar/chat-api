@@ -17,6 +17,18 @@ const findConversationById = async (id) => {
   return data
 }
 
+const findAllConversationsByUser = async (id) => {
+  const data = await Conversations.findAll({
+    include: {
+      model: Participants,
+      where: {
+        userId: id,
+      }
+    }
+  })
+  return data
+}
+
 const createConversation = async (conversationObj) => {
 
   //? Validacion por si el usuario invitado existe
@@ -53,5 +65,6 @@ const createConversation = async (conversationObj) => {
 }
 
 module.exports = {
-  createConversation
+  createConversation,
+  findAllConversationsByUser
 }
