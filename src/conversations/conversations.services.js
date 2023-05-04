@@ -67,10 +67,25 @@ const patchConversation = (req, res) => {
     })
 }
 
+const deleteConversation = (req, res) => {
+  const id = req.params.id
+  conversationControllers.removeConversation(id)
+    .then((data) => {
+      if(!data) {
+        return res.status(404).json({message: 'Invalid ID'})
+      }
+      res.status(204).json()
+    })
+    .catch((err) => {
+      res.status(400).json({message: 'Bad request', err})
+    })
+}
+
 module.exports = { 
   getAllConversations,
   getConversationById,
   postConversation,
   patchConversation,
+  deleteConversation,
   getAllConversationsByUser
 }

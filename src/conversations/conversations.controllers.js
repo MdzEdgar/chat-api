@@ -77,10 +77,20 @@ const updateConversation = async(id, conversationObj) => {
   return modifiedConversation
 }
 
+const removeConversation = async(id) => {
+  const conversation = await Conversations.destroy({
+    where: {
+      id: id
+    }
+  })
+  return conversation
+}
+
 module.exports = {
   findAllConversations,
   findConversationById,
   findAllConversationsByUser,
   createConversation,
-  updateConversation
+  updateConversation,
+  removeConversation
 }
