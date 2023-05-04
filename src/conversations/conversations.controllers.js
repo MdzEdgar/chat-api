@@ -64,9 +64,23 @@ const createConversation = async (conversationObj) => {
   return newConversation
 }
 
+const updateConversation = async(id, conversationObj) => {
+  const selectedConversation = await Conversations.findOne({
+    where: {
+      id: id
+    }
+  })
+
+  if (!selectedConversation) return null
+
+  const modifiedConversation = await selectedConversation.update(conversationObj)
+  return modifiedConversation
+}
+
 module.exports = {
   findAllConversations,
   findConversationById,
   findAllConversationsByUser,
   createConversation,
+  updateConversation
 }

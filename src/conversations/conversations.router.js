@@ -10,5 +10,6 @@ router.route('/')
 
 router.route('/:id')
   .get(passportJwt.authenticate('jwt', { session: false }), conversationServices.getConversationById)
+  .patch(passportJwt.authenticate('jwt', { session: false }), conversationServices.patchConversation)
 
 module.exports = router

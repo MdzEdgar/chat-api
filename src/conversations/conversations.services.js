@@ -51,9 +51,26 @@ const postConversation = (req, res) => {
       })
 }
 
+const patchConversation = (req, res) => {
+  const id = req.params.id
+  const { name, profileImage,isGroup } = req.body
+  conversationControllers.updateConversation(id, {name, profileImage,isGroup})
+    .then((data) => {
+      if(data) {
+        res.status(200).json(data)
+      } else {
+          res.status(404).json({message: "Conversation not found"})
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({err})
+    })
+}
+
 module.exports = { 
   getAllConversations,
   getConversationById,
   postConversation,
+  patchConversation,
   getAllConversationsByUser
 }
