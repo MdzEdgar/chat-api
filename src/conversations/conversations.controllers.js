@@ -112,6 +112,15 @@ const createMessage = async (id, messageObj) => {
   return newMessage
 }
 
+const findMessageById = async(id) => {
+  const message = await Messages.findOne({
+    where: {
+      id: id
+    }
+  })
+  return message
+}
+
 module.exports = {
   findAllConversations,
   findConversationById,
@@ -120,5 +129,6 @@ module.exports = {
   updateConversation,
   removeConversation,
   findAllMessagesByConversationId,
-  createMessage
+  createMessage,
+  findMessageById
 }

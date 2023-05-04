@@ -17,4 +17,7 @@ router.route('/:conversation_id/messages')
   .get(passportJwt.authenticate('jwt', { session: false }), conversationServices.getMessagesByConversationId)
   .post(passportJwt.authenticate('jwt', { session: false }), conversationServices.postMessage)
 
+router.route('/:conversation_id/messages/:message_id')
+  .get(passportJwt.authenticate('jwt', { session: false }), conversationServices.getMessageById)
+
 module.exports = router
