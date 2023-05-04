@@ -65,6 +65,8 @@ const createConversation = async (conversationObj) => {
 }
 
 module.exports = {
+  findAllConversations,
+  findConversationById,
+  findAllConversationsByUser,
   createConversation,
-  findAllConversationsByUser
 }

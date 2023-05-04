@@ -10,6 +10,21 @@ const getAllConversations =(req, res) => {
     })
 }
 
+const getConversationById = (req, res) => {
+  const id = req.params.id
+  conversationControllers.findConversationById(id)
+    .then((data) => {
+      if(data) {
+        res.status(200).json(data)
+    } else {
+        res.status(404).json({message: 'Conversation not found'})
+    }
+    })
+    .catch((err) => {
+      res.status(400).json({message: 'Bad request', err})
+    })
+}
+
 const getAllConversationsByUser = (req, res) => {
   const id = req.user.id
   conversationControllers.findAllConversationsByUser(id)
@@ -38,6 +53,7 @@ const postConversation = (req, res) => {
 
 module.exports = { 
   getAllConversations,
+  getConversationById,
   postConversation,
   getAllConversationsByUser
 }
